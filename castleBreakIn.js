@@ -7,25 +7,33 @@ class Wall extends Sprite {
         this.x = x;
         this.y = y;
         this.name = name;
-        this.setimage("image");
+        this.setImage(image);
         this.accelerateOnBounce = false;
 
     }
 }
 new Wall(0, 0, "A spooky castle wall", "castle.png");
-this.x = 0;
-this.y = 0;
-this.name = "A spooky castle wall";
-this.setimage("castle.png");
 
-let leftWall = (0, 200, "Left side wall", "wall.png");
-this.x = 0;
-this.y = 200;
-this.name = "Left side wall";
-this.setimage("wall.png");
+let leftWall = new Wall(0, 200, "Left side wall", "wall.png");
 
-let rightWall = (48, 200, "Right side wall", "wall.png");
-this.x = 48;
-this.y = 200;
-this.name = "Right side wall";
-this.setimage("wall.png");
+let rightWall = new Wall (48, 200, "Right side wall", "wall.png");
+
+class princess extends Sprite {
+    constructor() {
+        super();
+        this.name = "Princess Ann";
+        this.setImage("ann.png");
+        this.height = 48;
+        this.width = 48;
+        this.x = game.displayWidth / 2;
+        this.y = game.displayHeight - this.height;
+        this.speedWhenWalking = 150;
+        this.lives = 3;
+        this.accelerateOnBounce = false;
+        this.defineAnimation("left", 9, 11);
+        this.defineAnimation("right", 3, 5);
+    }
+}
+let ann = new princess;
+
+
