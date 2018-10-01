@@ -104,5 +104,17 @@ new Ball(360, 90, "ball", "ball.png");
 class Block extends Sprite {
     constructor(x, y) {
         super();
+        this.x = x;
+        this.y = y;
+        this.name = Block;
+        this.setImage("block1.png");
+        this.accelerateOnBounce = false;
     }
 }
+new Block(400, 200, "block", "block1.png");
+for (let i = 0; i < 5; i = i + 1) {
+    new Block(200 + i * 48, 200);
+    i = i + 1;     // increment the value of i by 1
+    4
+}
+
