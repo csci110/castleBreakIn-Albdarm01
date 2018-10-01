@@ -32,7 +32,7 @@ class princess extends Sprite {
         this.accelerateOnBounce = false;
         this.defineAnimation("left", 9, 11);
         this.defineAnimation("right", 3, 5);
-        this.lives = 1;
+        this.lives = 3;
     }
     handleLeftArrowKey() {
         this.playAnimation("left");
@@ -115,6 +115,6 @@ new Block(400, 200, "block", "block1.png");
 for (let i = 0; i < 5; i = i + 1) {
     new Block(200 + i * 48, 200);
     i = i + 1;     // increment the value of i by 1
-    4
+    
 }
 
