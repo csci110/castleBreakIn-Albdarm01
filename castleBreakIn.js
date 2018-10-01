@@ -32,7 +32,7 @@ class princess extends Sprite {
         this.accelerateOnBounce = false;
         this.defineAnimation("left", 9, 11);
         this.defineAnimation("right", 3, 5);
-        this.lives = 3;
+        this.lives = 1;
     }
     handleLeftArrowKey() {
         this.playAnimation("left");
@@ -63,10 +63,13 @@ class princess extends Sprite {
         // Set up a text area to display the number of lives remaining.
         this.livesDisplay = game.createTextArea(3, 20);
         this.updateLivesDisplay();
-        
+
     }
     updateLivesDisplay() {
         game.writeToTextArea(this.livesDisplay, "Lives = " + this.lives);
+    }
+    LoseALife() {
+        this.updateLivesDisplay();
     }
 }
 let ann = new princess();
@@ -90,8 +93,16 @@ class Ball extends Sprite {
         if (this < 200) {
             this.speed = 40;
         }
-
     }
-
+    handleBoundaryContact() {
+        game.removeSprite(this);
+        ann.loseALife();
+    }
 }
 new Ball(360, 90, "ball", "ball.png");
+
+class Block extends Sprite {
+    constructor(x, y) {
+        super();
+    }
+}
