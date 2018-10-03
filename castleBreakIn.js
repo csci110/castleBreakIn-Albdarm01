@@ -27,7 +27,7 @@ class princess extends Sprite {
         this.width = 48;
         this.x = game.displayWidth / 2;
         this.y = game.displayHeight - this.height;
-        this.speedWhenWalking = 300;
+        this.speedWhenWalking = 350;
         this.lives = 3;
         this.accelerateOnBounce = false;
         this.defineAnimation("left", 9, 11);
@@ -163,8 +163,8 @@ new ExtraLifeBlock(200, 250);
 
 
 class ExtraBallBlock extends Block {
-    constructor() {
-        super();
+    constructor(x,y) {
+        super(x,y);
         this.setImage("block3.png");
     }
     handleCollision() {
@@ -174,3 +174,6 @@ class ExtraBallBlock extends Block {
     }
 }
 new ExtraBallBlock(300, 250);
+
+Ball.ballsInPlay = Ball.ballsInPlay +1;
+
