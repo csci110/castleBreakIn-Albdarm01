@@ -27,12 +27,16 @@ class princess extends Sprite {
         this.width = 48;
         this.x = game.displayWidth / 2;
         this.y = game.displayHeight - this.height;
-        this.speedWhenWalking = 150;
+        this.speedWhenWalking = 300;
         this.lives = 3;
         this.accelerateOnBounce = false;
         this.defineAnimation("left", 9, 11);
         this.defineAnimation("right", 3, 5);
         this.lives = 3;
+    }
+    addAlife() {
+        this.lives = this.lives + 1;
+        this.updateLivesDisplay();
     }
     handleLeftArrowKey() {
         this.playAnimation("left", true);
@@ -74,13 +78,14 @@ class princess extends Sprite {
         game.writeToTextArea(this.livesDisplay, "Lives = " + this.lives);
     }
     LoseALife() {
+        this.lives = this.lives - 1;
         this.updateLivesDisplay();
         if (this.lives > 0) {
             new Ball();
         }
         if (this.lives <= 0) {
-            game.end('The mysterious stranger has escaped\nPrincess Ann for' +
-                'now!\n\nBetter luck next time.');
+            game.end('The mysterious stranger has escaped\nPrincess Ann for ' +
+                'now !\n\nBetter luck next time.');
         }
 
     }
@@ -98,7 +103,7 @@ class Ball extends Sprite {
         this.width = 48;
         this.name = Ball;
         this.defineAnimation("spin", 0, 12);
-        this.speed = 40;
+        this.speed = 80;
         this.angle = 50 + Math.random() * 80;
 
     }
@@ -111,6 +116,7 @@ class Ball extends Sprite {
     }
     handleBoundaryContact() {
         game.removeSprite(this);
+        ann.LoseALife(this);
     }
 }
 new Ball(360, 90, "ball", "ball.png");
@@ -139,12 +145,32 @@ Block.blocksToDestroy = 0;
 for (let i = 0; i < 5; i = i + 1) {
     new Block(200 + i * 48, 200);
 }
+
 class ExtraLifeBlock extends Block {
-    
-}
-class ExtraBallBlock extends Block {
-    
+    constructor(x, y) {
+        super(x, y);
+        this.setImage("block2.png");
+        Block.blocksToDestroy = Block.blocksToDestroy - 1;
+    }
+    handleCollision() {
+        ann.addAlife();
+        return true;
+    }
 }
 new ExtraLifeBlock(200, 250);
 
+
+
+
+class ExtraBallBlock extends Block {
+    constructor() {
+        super();
+        this.setImage("block3.png");
+    }
+    handleCollision() {
+        super.handleCollision(); // call function in superclass
+        new Ball(); // extend superclass behavior
+        return true;
+    }
+}
 new ExtraBallBlock(300, 250);
