@@ -35,12 +35,12 @@ class princess extends Sprite {
         this.lives = 3;
     }
     handleLeftArrowKey() {
-        this.playAnimation("left");
+        this.playAnimation("left", true);
         this.angle = 180;
         this.speed = this.speedWhenWalking;
     }
     handleRightArrowKey() {
-        this.playAnimation("right");
+        this.playAnimation("right", true);
         this.angle = 0;
         this.speed = this.speedWhenWalking;
     }
@@ -59,9 +59,9 @@ class princess extends Sprite {
         }
         return false;
     }
-    handlGameLoop() {
-        this.x = Math.max(this.x);
-        this.y = Math.min(552, this.y);
+    handleGameLoop() {
+        this.x = Math.min(this.x, game.displayWidth - 2 * 48);
+        this.x = Math.max(48, this.x);
         this.speed = 0;
     }
     handleFirstGameLoop() {
@@ -103,10 +103,10 @@ class Ball extends Sprite {
 
     }
 
-    handlGameLoop() {
-        this.speed = 40;
-        if (this < 200) {
-            this.speed = 40;
+    handleGameLoop() {
+
+        if (this.speed < 200) {
+            this.speed = this.speed + 2;
         }
     }
     handleBoundaryContact() {
@@ -123,11 +123,28 @@ class Block extends Sprite {
         this.name = Block;
         this.setImage("block1.png");
         this.accelerateOnBounce = false;
+        Block.blocksToDestroy = Block.blocksToDestroy + 1;
+    }
+    handleCollision() {
+        game.removeSprite(this);
+        Block.blocksToDestroy = Block.blocksToDestroy - 1;
+        if (Block.blocksToDestroy <= 0) {
+            game.end('Congratulations!\n\nPrincess Ann can continue ' +
+                'her pursuit\nof the mysterious stranger!');
+            this.true;
+        }
     }
 }
-new Block(400, 200, "block", "block1.png");
+Block.blocksToDestroy = 0;
 for (let i = 0; i < 5; i = i + 1) {
     new Block(200 + i * 48, 200);
-    i = i + 1; // increment the value of i by 1
-
 }
+class ExtraLifeBlock extends Block {
+    
+}
+class ExtraBallBlock extends Block {
+    
+}
+new ExtraLifeBlock(200, 250);
+
+new ExtraBallBlock(300, 250);
