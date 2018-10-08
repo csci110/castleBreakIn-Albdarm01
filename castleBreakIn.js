@@ -77,7 +77,7 @@ class princess extends Sprite {
     updateLivesDisplay() {
         game.writeToTextArea(this.livesDisplay, "Lives = " + this.lives);
     }
-    LoseALife() {
+    loseALife() {
         this.lives = this.lives - 1;
         this.updateLivesDisplay();
         if (this.lives > 0) {
@@ -96,18 +96,27 @@ let ann = new princess();
 class Ball extends Sprite {
     constructor(x, y, name, image) {
         super();
-        this.x = 390;
-        this.y = 500;
+        this.x = game.displayWidth / 2;
+        this.y = game.displayHeight / 2;
         this.setImage("ball.png");
         this.height = 48;
         this.width = 48;
         this.name = Ball;
         this.defineAnimation("spin", 0, 12);
+        this.playAnimation("spin", true);
         this.speed = 80;
         this.angle = 50 + Math.random() * 80;
+        Ball.ballsInPlay = Ball.ballsInPlay + 1;
 
     }
 
+    handleBoundaryContact() {
+        Ball.ballsInPlay = Ball.ballsInPlay - 1;
+
+        if (Ball.ballsInPlay <= 0) {
+            ann.loseALife();
+        }
+    }
     handleGameLoop() {
 
         if (this.speed < 200) {
@@ -116,9 +125,11 @@ class Ball extends Sprite {
     }
     handleBoundaryContact() {
         game.removeSprite(this);
-        ann.LoseALife(this);
+        ann.loseALife(this);
     }
 }
+Ball.ballsInPlay = 0;
+
 new Ball(360, 90, "ball", "ball.png");
 
 class Block extends Sprite {
@@ -130,6 +141,9 @@ class Block extends Sprite {
         this.setImage("block1.png");
         this.accelerateOnBounce = false;
         Block.blocksToDestroy = Block.blocksToDestroy + 1;
+        if (Ball.ballsInPlay <= 0) {
+
+        }
     }
     handleCollision() {
         game.removeSprite(this);
@@ -163,8 +177,8 @@ new ExtraLifeBlock(200, 250);
 
 
 class ExtraBallBlock extends Block {
-    constructor(x,y) {
-        super(x,y);
+    constructor(x, y) {
+        super(x, y);
         this.setImage("block3.png");
     }
     handleCollision() {
@@ -174,6 +188,3 @@ class ExtraBallBlock extends Block {
     }
 }
 new ExtraBallBlock(300, 250);
-
-Ball.ballsInPlay = Ball.ballsInPlay +1;
-
