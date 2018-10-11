@@ -172,7 +172,7 @@ class ExtraLifeBlock extends Block {
         return true;
     }
 }
-new ExtraLifeBlock(200, 250);
+new ExtraLifeBlock(100, 250);
 
 new ExtraLifeBlock(600, 250);
 
@@ -191,8 +191,9 @@ new ExtraBallBlock(300, 250);
 
 new ExtraBallBlock(450, 250);
 
-        new Block(100, 100);
-        new Block(100, 550);
-        new Block(750, 50);
-        new Block(750, 550);
+        new Block(100, 450);
+        new Block(100, 350);
+        new Block(600, 350);
+        new Block(600, 450);
+        
 
